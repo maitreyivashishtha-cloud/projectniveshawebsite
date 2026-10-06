@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nivesha · Many voices welcome</title>
+  <meta name="description" content="Financial literacy for a brighter future.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=Young+Serif&family=Noto+Sans+Devanagari&family=Noto+Sans+Bengali&family=Noto+Sans+Tamil&family=Noto+Sans+Telugu&family=Noto+Sans+Kannada&family=Noto+Sans+Malayalam&family=Noto+Sans+Gujarati&family=Noto+Sans+Gurmukhi&family=Noto+Sans+Oriya&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f4efe5;
+      --rule: #cfc7ba;
+      --ink: #171713;
+      --muted: #6f6a61;
+      --saffron: #e8702a;
+      --green: #2f5d34;
+      --olive: #3f4f2b;
+      --tan: #ae9170;
+
+      --font: 'Arimo', 'Noto Sans Devanagari', 'Noto Sans Bengali', 'Noto Sans Tamil',
+              'Noto Sans Telugu', 'Noto Sans Kannada', 'Noto Sans Malayalam',
+              'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Oriya',
+              system-ui, sans-serif;
+
+      /* Marquee: design slides 1200px per 5s = 240px/s. One 12-greeting cycle is 4080px. */
+      --item-w: 296px;
+      --item-gap: 44px;
+      --cycle-w: 4080px;
+      --marquee-duration: 17s;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body { margin: 0; }
+
+    body {
+      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Masthead */
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      height: 82px;
+      padding: 0 48px;
+      border-bottom: 1px solid var(--rule);
+      flex-shrink: 0;
+    }
+
+    .india-marker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.92px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot--saffron { background: var(--saffron); }
+    .dot--green { background: var(--green); }
+
+    .tagline {
+      margin: 0;
+      font-size: 11px;
+      letter-spacing: 1.32px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    /* Greeting field */
+    .greeting-field {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .greeting-band {
+      width: 100%;
+      height: 130px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    .track {
+      display: flex;
+      align-items: center;
+      gap: var(--item-gap);
+      height: 96px;
+      width: max-content;
+      animation: slide var(--marquee-duration) linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes slide {
+      from { transform: translateX(0); }
+      to   { transform: translateX(calc(-1 * var(--cycle-w) )); }
+    }
+
+    .greeting {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 0 0 var(--item-w);
+      width: var(--item-w);
+      height: 96px;
+      overflow: hidden;
+    }
+
+    .greeting .accent {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--saffron);
+    }
+    .greeting[data-accent="green"] .accent { background: var(--green); }
+
+    .greeting-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .greeting-word {
+      margin: 0;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: normal;
+      white-space: nowrap;
+    }
+
+    .greeting-label {
+      margin: 0;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.08px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Footnote (empty in the design; kept as the closing rule) */
+    .footnote {
+      border-top: 1px solid var(--rule);
+      padding: 0 48px;
+      min-height: 48px;
+      flex-shrink: 0;
+    }
+
+
+    /* Screens + dissolve (Figma: Dissolve, ease-out, 1.2s) */
+    .stage { display: grid; }
+    .screen { grid-area: 1 / 1; display: flex; flex-direction: column; min-height: 100vh; background: var(--paper); }
+    .screen[hidden] { display: none; }
+    .screen--why { gap: 14px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 1.2s ease-out; }
+    .screen--why.is-active { opacity: 1; visibility: visible; pointer-events: auto; z-index: 2; }
+
+    /* Why Nivesha */
+    .serif { font-family: 'Young Serif', Georgia, serif; font-weight: 400; font-style: normal; }
+    .evidence { padding: 40px 48px 0; }
+    .progress { display: flex; flex-direction: column; gap: 24px; padding: 24px 24px 40px;
+      background: #f8f3ea; border-top: 1px solid var(--rule); border-radius: 24px; }
+    .stats { display: flex; gap: 16px; }
+    .stat { flex: 1 1 0; min-width: 0; min-height: 140px; display: flex; flex-direction: column; justify-content: space-between;
+      gap: 12px; padding: 20px 24px; background: var(--paper); border: 1px solid var(--rule); border-radius: 16px; }
+    .stat .dot { width: 8px; height: 8px; margin-bottom: 7px; }
+    .stat-value { margin: 0; font-size: 40px; color: var(--olive); }
+    .stat-desc { margin: 0; font-size: 13px; line-height: 1.3; color: var(--muted); }
+    .source { margin: 0; font-size: 11px; line-height: 1.35; color: var(--muted); }
+    .purpose { display: flex; flex-direction: column; gap: 24px; padding: 0 63px 0 48px; }
+    .context { display: flex; gap: 72px; }
+    .narrative { display: flex; flex-direction: column; gap: 33px; flex: 0 1 610px; }
+    .eyebrow { margin: 0; font-size: 10px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
+    .narrative h2 { margin: 0; font-size: 40px; line-height: normal; color: var(--ink); }
+    .explain { flex: 1 1 0; margin: 0; font-size: 24px; line-height: 1.4; color: var(--muted); }
+    .nivesha { display: flex; flex-direction: column; gap: 32px; padding: 40px 40px 120px; }
+    .nivesha-head { display: flex; flex-direction: column; gap: 8px; max-width: 974px; }
+    .nivesha-head h2 { margin: 0; font-size: 40px; line-height: normal; color: var(--olive); text-align: center; }
+    .nivesha-copy { margin: 0; max-width: 463px; font-size: 17px; line-height: 1.45; color: #714c2f; }
+    .continue { align-self: center; margin-top: auto; padding: 0 48px 48px; background: none; border: 0; cursor: pointer;
+      font: inherit; font-size: 11px; letter-spacing: 1.32px; text-transform: uppercase; color: var(--muted); }
+    .continue:focus-visible { outline: 2px solid var(--olive); outline-offset: 4px; }
+
+    /* Figma motion: staggered fade-ins on a 5s timeline, played once (--s/--e = start/end fraction) */
+    .screen--why .fx { opacity: 0; }
+    .screen--why.is-active .fx { animation: fx calc((var(--e) - var(--s)) * 5s) ease-out calc(var(--s) * 5s) both; }
+    @keyframes fx { from { opacity: 0; } to { opacity: 1; } }
+
+    @media (max-width: 900px) {
+      .stats, .context { flex-direction: column; }
+      .context { gap: 24px; }
+      .purpose { padding: 0 20px; }
+      .evidence { padding: 24px 20px 0; }
+      .nivesha { padding: 24px 16px 48px; }
+      .narrative h2, .nivesha-head h2 { font-size: 30px; }
+      .explain { font-size: 20px; }
+    }
+
+    @media (max-width: 640px) {
+      .masthead { padding: 0 20px; height: 72px; }
+      .tagline { font-size: 9px; letter-spacing: 1.1px; max-width: 150px; }
+      .footnote { padding: 0 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .track { animation: none; }
+      .screen--why { transition: none; }
+      .screen--why .fx { opacity: 1; animation: none !important; }
+      .greeting-band { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+<div class="stage">
+<section class="screen screen--greeting is-active" id="greeting">
+  <header class="masthead">
+    <div class="india-marker">
+      <span class="dot dot--saffron" aria-hidden="true"></span>
+      <span>India / भारत</span>
+      <span class="dot dot--green" aria-hidden="true"></span>
+    </div>
+    <p class="tagline">Financial literacy for a brighter future</p>
+  </header>
+
+  <main class="greeting-field">
+    <div class="greeting-band" role="region" aria-label="Greetings in Indian languages">
+      <div class="track" id="track"></div>
+    </div>
+  </main>
+
+  <footer class="footnote"></footer>
+</section>
+
+<section class="screen screen--why" id="why" aria-hidden="true" aria-label="Why Nivesha">
+  <header class="masthead">
+    <div class="india-marker">
+      <span class="dot dot--saffron" aria-hidden="true"></span>
+      <span>India / भारत</span>
+      <span class="dot dot--green" aria-hidden="true"></span>
+    </div>
+    <p class="tagline">Financial literacy for a brighter future</p>
+  </header>
+
+  <div class="evidence">
+    <div class="progress">
+      <div class="stats">
+        <div class="stat">
+          <div><span class="dot" style="background:var(--tan)"></span>
+            <p class="stat-value fx" style="--s:.02;--e:.10">29.17%</p></div>
+          <p class="stat-desc fx" style="--s:.06;--e:.14">India’s multidimensional poverty rate in 2013–14</p>
+        </div>
+        <div class="stat">
+          <div><span class="dot" style="background:var(--olive)"></span>
+            <p class="stat-value fx" style="--s:.11;--e:.19">11.28%</p></div>
+          <p class="stat-desc fx" style="--s:.15;--e:.23">India’s multidimensional poverty rate in 2022–23</p>
+        </div>
+        <div class="stat">
+          <div><span class="dot" style="background:var(--tan)"></span>
+            <p class="stat-value fx" style="--s:.20;--e:.28">24.82 crore</p></div>
+          <p class="stat-desc fx" style="--s:.24;--e:.32">people moved out of multidimensional poverty between 2013–14 and 2022–23</p>
+        </div>
+      </div>
+      <p class="source fx" style="--s:.31;--e:.39">Source: NITI Aayog, Multidimensional Poverty in India since 2005–06, Discussion Paper, January 2024.</p>
+    </div>
+  </div>
+
+  <div class="purpose">
+    <div class="context">
+      <div class="narrative">
+        <p class="eyebrow fx" style="--s:.41;--e:.47;color:#d86f2a">Why this work matters</p>
+        <h2 class="serif fx" style="--s:.45;--e:.55">Financial vulnerability has many causes.</h2>
+      </div>
+      <p class="explain serif fx" style="--s:.53;--e:.63">Poverty is shaped by structural and social conditions. High-cost debt, low financial awareness, fraud and unexpected expenses can deepen vulnerability — never define the people experiencing it.</p>
+    </div>
+    <div class="nivesha">
+      <div class="nivesha-head">
+        <p class="eyebrow fx" style="--s:.69;--e:.75;color:var(--tan)">From evidence to action</p>
+        <h2 class="serif fx" style="--s:.76;--e:.86">AND THAT’S WHY WE STARTED NIVESHA</h2>
+      </div>
+      <p class="nivesha-copy serif fx" style="--s:.87;--e:.97">Nivesha helps people make safer financial decisions through practical, community-led drives — with clear information, trusted tools and space to ask questions.</p>
+    </div>
+  </div>
+
+  <button class="continue" id="continue" type="button">Press Enter to continue</button>
+</section>
+</div>
+
+  <script>
+    // One cycle = 12 greetings (matches the Figma sequence). Rendered twice for a seamless loop.
+    const greetings = [
+      { word: 'नमस्ते',        lang: 'hi', label: 'Hindi · Namaste',          accent: 'saffron' },
+      { word: 'নমস্কার',       lang: 'bn', label: 'Bengali · Nomoshkar',      accent: 'saffron' },
+      { word: 'வணக்கம்',       lang: 'ta', label: 'Tamil · Vanakkam',         accent: 'saffron' },
+      { word: 'నమస్కారం',      lang: 'te', label: 'Telugu · Namaskaram',      accent: 'saffron' },
+      { word: 'ನಮಸ್ಕಾರ',       lang: 'kn', label: 'Kannada · Namaskara',      accent: 'saffron' },
+      { word: 'നമസ്കാരം',      lang: 'ml', label: 'Malayalam · Namaskaram',   accent: 'green' },
+      { word: 'નમસ્તે',        lang: 'gu', label: 'Gujarati · Namaste',       accent: 'green' },
+      { word: 'ਸਤ ਸ੍ਰੀ ਅਕਾਲ',   lang: 'pa', label: 'Punjabi · Sat Sri Akaal',  accent: 'green' },
+      { word: 'नमस्कार',       lang: 'mr', label: 'Marathi · Namaskar',       accent: 'green' },
+      { word: 'ନମସ୍କାର',       lang: 'or', label: 'Odia · Namaskar',          accent: 'green' },
+      { word: 'নমস্কাৰ',       lang: 'as', label: 'Assamese · Nomoskar',      accent: 'saffron' },
+      { word: 'नमस्ते',        lang: 'sa', label: 'Sanskrit · Namaste',       accent: 'saffron' }
+    ];
+
+    const track = document.getElementById('track');
+
+    [0, 1].forEach(copy => {
+      greetings.forEach(g => {
+        const item = document.createElement('div');
+        item.className = 'greeting';
+        item.dataset.accent = g.accent;
+        if (copy === 1) item.setAttribute('aria-hidden', 'true');
+
+        const dot = document.createElement('span');
+        dot.className = 'accent';
+
+        const text = document.createElement('div');
+        text.className = 'greeting-copy';
+
+        const word = document.createElement('p');
+        word.className = 'greeting-word';
+        word.lang = g.lang;
+        word.textContent = g.word;
+
+        const label = document.createElement('p');
+        label.className = 'greeting-label';
+        label.textContent = g.label;
+
+        text.append(word, label);
+        item.append(dot, text);
+        track.append(item);
+      });
+    });
+    // Prototype flow (read from the Figma file):
+    //  Greeting --after 2s, Dissolve ease-out 1.2s--> Why Nivesha --Enter, instant--> landing page
+    const GREETING_MS = 2000;      // Figma: AFTER_TIMEOUT 2s
+    const DISSOLVE_MS = 1200;      // Figma: Dissolve 1.2s (duration is set in CSS too)
+    const NEXT_PAGE = 'landing.html';
+    const greeting = document.getElementById('greeting');
+    const why = document.getElementById('why');
+    let shown = false;
+
+    function showWhy() {
+      if (shown) return;
+      shown = true;
+      why.classList.add('is-active');
+      why.removeAttribute('aria-hidden');
+      setTimeout(() => { greeting.hidden = true; window.scrollTo(0, 0); }, DISSOLVE_MS);
+    }
+    if (location.hash === '#why') {   // direct link (e.g. footer "About Us"): skip the greeting
+      why.style.transition = 'none';
+      greeting.hidden = true;
+      shown = true;
+      why.classList.add('is-active');
+      why.removeAttribute('aria-hidden');
+    } else {
+      setTimeout(showWhy, GREETING_MS);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      if (!shown) showWhy(); else location.href = NEXT_PAGE;
+    });
+    document.getElementById('continue').addEventListener('click', () => { location.href = NEXT_PAGE; });
+  </script>
+</body>
+</html>
